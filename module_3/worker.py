@@ -25,6 +25,6 @@ def from_website(url):
     soup = BeautifulSoup(r.content)
     
     tmp = soup.find_all('span', {"class":"ratingDate"})
-    rev_dates_lst = [datetime.strptime(i['title'], '%B %d, %Y') for i in tmp]
+    rev_dates_lst = [i['title'] for i in tmp]
     
     return rev_dates_lst	
