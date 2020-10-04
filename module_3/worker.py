@@ -21,10 +21,22 @@ def from_website(url):
     website if the proper url is provided.
     '''
     #print(f"https://www.tripadvisor.com{url}")
-    r = requests.get(f"https://www.tripadvisor.com{url}", timeout=20)
+    u0 = f"https://www.tripadvisor.com{url}"
+    r = requests.get(u0, timeout=600)
     soup = BeautifulSoup(r.content)
+    a_lst = soup.find_all('a', {"class":"pageNum"})
+    offs = []
+    for a in a_lst:
+        offs.append(a.attrs['data-offset'])
     
-    tmp = soup.find_all('span', {"class":"ratingDate"})
-    rev_dates_lst = [i['title'] for i in tmp]
+    rev_dates_lst = []
+
+    for o in offs:    
+        u = u0.replace('.html',f"-or{o}.html")
+        r1 = requests.get(u, timeout=600)
+        soup1 = BeautifulSoup(r1.content)
+
+        tmp = soup1.find_all('span', {"class":"ratingDate"})
+        rev_dates_lst = rev_dates_lst + [i['title'] for i in tmp]
     
-    return rev_dates_lst	
+    return rev_dates_lst
