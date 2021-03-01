@@ -20,8 +20,6 @@ while True:
 		connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
 		channel = connection.channel()
 
-		print('I am here')
-
 		channel.queue_declare(queue='Features')
 		channel.queue_declare(queue='y_true')
 

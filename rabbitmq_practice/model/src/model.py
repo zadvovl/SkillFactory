@@ -3,6 +3,7 @@ import pika
 import json
 import pickle
 import numpy as np
+import sys
 
 with open('myfile.pkl', 'rb') as pkl_file:
     regressor = pickle.load(pkl_file)
@@ -22,6 +23,9 @@ try:
         print(f'Получен вектор признаков {features} с уникальным id {uid}')
 
         pred = regressor.predict(np.array(features).reshape(1, -1))
+
+        print('I am here!!!')
+
         channel.basic_publish(exchange='',
                               routing_key='y_predict',
                               body=json.dumps({uid:list(pred[0])}))   
@@ -36,3 +40,4 @@ try:
 
 except:
     print('Не удалось подключиться к очереди')
+    print(f'Unexpected error: {sys.exc_info()[0]}')
