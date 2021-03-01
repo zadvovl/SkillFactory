@@ -16,14 +16,16 @@ try:
     channel.queue_declare(queue='y_predict')
 
     def callback(ch, method, properties, body):
-        print(f'Получен вектор признаков {body}')
-        features = json.loads(body)
-        pred = regressor.predict(np.array(features).reshape(1, -1))
+        uid = list(json.loads(body).keys())[0]
+        features = list(json.loads(body).values())[0]
 
+        print(f'Получен вектор признаков {features} с уникальным id {uid}')
+
+        pred = regressor.predict(np.array(features).reshape(1, -1))
         channel.basic_publish(exchange='',
                               routing_key='y_predict',
-                              body=json.dumps(pred[0]))
-        print(f'Предсказание {pred[0]} отправлено в очередь y_predict')
+                              body=json.dumps({uid:list(pred[0])}))   
+        print(f'Предсказание {pred[0]} отправлено в очередь y_predict c уникальным id {uid}')
 
 
     channel.basic_consume(
