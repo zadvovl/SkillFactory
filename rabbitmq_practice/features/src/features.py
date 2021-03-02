@@ -34,7 +34,7 @@ while True:
 
 		print(f'Сообщение с правильным ответом {correct_answer}, отправлено в очередь')
 		connection.close()
-		time.sleep(5)
+		time.sleep(10)
 	except:
 		print('Не удалось подключиться к очереди')
 		print(f'Unexpected error: {sys.exc_info()[0]}')
