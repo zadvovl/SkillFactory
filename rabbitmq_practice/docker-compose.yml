@@ -14,14 +14,16 @@ services:
             context: ./features
         restart: always
         depends_on:
-              - rabbitmq
+              - rabbitmq              
 
   metric:
         build:
             context: ./metric
         restart: always
         depends_on:
-              - rabbitmq              
+              - rabbitmq
+        volumes: 
+              - ./results/:/usr/src/app/results/                                                
 
   model:
         build:
