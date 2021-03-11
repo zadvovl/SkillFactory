@@ -1,0 +1,6 @@
+version: "3.7"
+
+services:
+  checker:
+    image: mike0sv/sf_docker_check
+    container_name: checker
