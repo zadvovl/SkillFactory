@@ -1,6 +1,22 @@
 version: "3.7"
 
 services:
+
+  solution:
+    build:
+      context: ./solution
+    restart: always    
+    container_name: solution
+
+  nginx:
+    build:
+      context: ./nginx    
+    container_name: nginx
+    depends_on:
+      - solution           
+
   checker:
     image: mike0sv/sf_docker_check
     container_name: checker
+    depends_on:
+      - solution      
