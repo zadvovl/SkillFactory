@@ -43,7 +43,9 @@ CREATE TABLE "d_city" (
   "id_city" int PRIMARY KEY,
   "id_country" int,
   "city_name" varchar,
-  "city_population" int
+  "city_population" int,
+  "latitude" float,
+  "longitude" float
 );
 
 CREATE TABLE "d_country" (
